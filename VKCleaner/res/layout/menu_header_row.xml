@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="#984532"
+    android:orientation="horizontal" >
+
+     <TextView
+         android:id="@+id/txtHeader"
+         android:layout_width="0dp"
+         android:layout_height="wrap_content"
+         android:layout_weight="1"
+         android:layout_gravity="left|center_vertical"
+         android:background="#397825"
+         android:gravity="left"
+         android:padding="10dp"
+         android:text="Sergii Radkivskyi"
+         android:textColor="#FFFFFF"
+         android:textSize="22sp"
+         android:textStyle="bold" />
+
+     <Button
+         android:id="@+id/logout_btn"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_gravity="right|center_vertical|center_horizontal"
+         android:background="@drawable/logout_custom_style"
+         android:focusable="false"
+         android:focusableInTouchMode="true" />
+
+</LinearLayout>

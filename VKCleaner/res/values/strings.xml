@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">VK Cleaner</string>
+    
+    <!-- Main menu items -->
+    <string name="item0">Remove wallposts</string>
+    <string name="item1">Remove messages</string>
+    <string name="item2">Remove friends</string>
+    <string name="item3">Remove photos</string>
+    <string name="item4">Remove video</string>
+    <string name="item5">Remove audio</string>
+    <string name="item6">Remove groups</string>
+    
+    
+    <!-- Buttons titles -->
+    <string name="cancel_btn">Cancel</string>
+    <string name="ok_btn">Ok</string>
+    
+    <!-- Dialogs-->
+    <string name="dlg_title">Alert</string>
+    <string name="dlg_body">Sorry, other task is currently running...</string>
+
+    <!-- Progress activity -->
+    <string name="progress_title_item0">Removing wallposts</string>
+    <string name="progress_title_item1">Removing messages</string>
+    <string name="progress_title_item2">Removing friends</string>
+    <string name="progress_title_item3">Removing photos</string>
+    <string name="progress_title_item4">Removing video</string>
+    <string name="progress_title_item5">Removing audio</string>
+    <string name="progress_title_item6">Removing groups</string>
+    
+    <string name="progress_done">Done: </string>
+    <string name="progress_done_value">50 of 7240 items.</string>
+
+</resources>

@@ -1,10 +1,16 @@
 package com.rsd.vkcleaner;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.concurrent.TimeUnit;
+
+import org.json.JSONException;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -15,6 +21,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.perm.kate.api.KException;
 
 public class ProgressServiceActivity extends Activity implements OnClickListener
 {
@@ -92,9 +100,9 @@ public class ProgressServiceActivity extends Activity implements OnClickListener
     			break;
     			
     		case R.id.advert_holder:
-    			Log.d(tag, "Image clicked");
+    			/*Log.d(tag, "Image clicked");
     			Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
-    			startActivity(browserIntent);
+    			startActivity(browserIntent);*/
     			break;
     		
     	}
@@ -127,8 +135,7 @@ public class ProgressServiceActivity extends Activity implements OnClickListener
     			break;
     			
     		case MenuItemConstants.REMOVE_MESSAGES:
-    			
-    			//stopService(g2);
+    			task = getRemoveMessagesTask();
     			break;
     			
     		case MenuItemConstants.REMOVE_FRIENDS:
@@ -199,7 +206,75 @@ public class ProgressServiceActivity extends Activity implements OnClickListener
 		return task;
 	}
 	
-	
+	private Runnable getRemoveMessagesTask()
+	{
+		Log.d(tag, "executeNewTask");
+		Log.d(tag, "executeNewTask.hashcode: " + this.hashCode());
+		Log.d(tag, "ProgressActivity.executeNewTask.hashcode: " + ProgressServiceActivity.this.hashCode());
+		//declarate work to do
+		Runnable task = new Runnable() {
+			
+			Message msg = null;
+			
+			@Override
+			public void run() {
+
+				try {
+					ProgressStatus obj = new ProgressStatus();
+					obj.min = 0;
+					obj.max = 30;
+					
+					msg = h.obtainMessage(ProgressStatus.WORK_STARTED, obj);
+					h.sendMessage(msg);
+					
+					for (int i=0; i<=obj.max; i++)
+					{
+						try{
+							VKManager.getApiInstance().createWallPost(Account.user_id, "Test wallpost record # " + i, null,
+									null, false, false, false, null, null, "", "");
+						}
+						catch(KException e)
+						{
+							e.printStackTrace();
+							try{
+								URL url = new URL(e.captcha_img);
+								Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+								advert_holder.setImageBitmap(bmp);
+							}
+							catch(Exception ex){}
+						
+							
+						}
+						catch(JSONException e)
+						{
+							e.printStackTrace();
+						}
+						catch(MalformedURLException e)
+						{
+							e.printStackTrace();
+						}
+						catch(IOException e)
+						{
+							e.printStackTrace();
+						}
+						
+						TimeUnit.SECONDS.sleep(1);
+						obj.current = i;
+						msg = h.obtainMessage(ProgressStatus.PROGRESS_UPDATED, obj);
+						h.sendMessage(msg);
+					}
+					
+					h.sendEmptyMessage(ProgressStatus.WORK_DONE);
+					
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		};
+
+		return task;
+	}
 	//------------------end PRIVATE SECTION----------------------------------
 
 }

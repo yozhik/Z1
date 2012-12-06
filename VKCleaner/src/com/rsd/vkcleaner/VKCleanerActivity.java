@@ -7,14 +7,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-import com.perm.kate.api.Api;
-
 public class VKCleanerActivity extends Activity implements OnClickListener {
     
 	private static final String tag = "VKCleanerActivity";
 	
 	private Account account=new Account();
-	private Api api;
+	
 	private final int REQUEST_LOGIN=1;
 	
     @Override
@@ -30,7 +28,7 @@ public class VKCleanerActivity extends Activity implements OnClickListener {
         account.restore(this);
         if(account.access_token!=null)
         {
-            api=new Api(account.access_token, "2904017");
+        	VKManager.initApiInstance(account.access_token, "2904017");
             startMenuActivity();
         }
     }
@@ -67,7 +65,7 @@ public class VKCleanerActivity extends Activity implements OnClickListener {
                 account.access_token=data.getStringExtra("token");
                 account.user_id=data.getLongExtra("user_id", 0);
                 account.save(VKCleanerActivity.this);
-                api=new Api(account.access_token, "2904017");
+                VKManager.initApiInstance(account.access_token, "2904017");
                 startMenuActivity();
             }
         }

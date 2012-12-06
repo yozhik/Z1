@@ -57,8 +57,7 @@ public class MenuActivity extends Activity implements OnClickListener, OnItemCli
     			
     		case MenuItemConstants.REMOVE_MESSAGES:
     			Log.e(tag, "onItemClick(): " + position + "  " + selectedItem.title);
-    			//Intent g2 = new Intent(this, BackgroundService.class);
-    			//stopService(g2);
+    			startBackgroundTask(selectedItem.id);
     			break;
     			
     		case MenuItemConstants.REMOVE_FRIENDS:
